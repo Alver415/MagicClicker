@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Magic Clicker (v0)</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="spinner.css" />
+    <link rel="stylesheet" type="text/css" href="tooltip.css" />
+    <link rel="stylesheet" type="text/css" href="magicclicker.css" />
+    <meta name="description" content="WebClicker: Click Stuff" />
+    <script src="stat.js" type="text/javascript"></script>
+    <script src="land.js" type="text/javascript"></script>
+    <script src="artifact.js" type="text/javascript"></script>
+    <script src="player.js" type="text/javascript"></script>
+    <script src="creature.js" type="text/javascript"></script>
+    <script src="spell.js" type="text/javascript"></script>
+    <script src="magicclicker.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+    <div id="header">
+        <h1><span id="playerName">PLAYER_NAME</span>, <span id="playerTitle">PLAYER_TITLE</span>
+            <div class="lds-ring">
+                <div></div>
+            </div>
+        </h1>
+        <div style="clear:both;"></div>
+    </div>
+
+    <div id='playerArea'>
+        <div id="playerStats">
+            <h3>Stats</h3>
+            <table id="playerStatsTable">
+                <tr>
+                    <td><mana-button id="colorlessMana" mana="colorless"  color="grey"      background="resources/C.svg"/></td>
+                    <td><mana-button id="whiteMana"     mana="white"      color="gold"      background="resources/W.svg"/></td>
+                    <td><mana-button id="blueMana"      mana="blue"       color="blue"      background="resources/U.svg"/></td>
+                    <td><mana-button id="blackMana"     mana="black"      color="black"     background="resources/B.svg"/></td>
+                    <td><mana-button id="redMana"       mana="red"        color="red"       background="resources/R.svg"/></td>
+                    <td><mana-button id="greenMana"     mana="green"      color="green"     background="resources/G.svg"/></td>
+                </tr>
+                <tr>
+                    <td colspan="6"><span id="playerHealth">
+                            <span id="playerHealthCurrent">0</span> / <span id="playerHealthMax">0</span></td>
+                    </span>
+                </tr>
+            </table>
+        </div>
+        <div id="playerActions">
+            <h3>Actions</h3>
+            <table>
+                <tr>
+                    <td><button onmousedown="attack()"><b>Attack</b></button></td>
+                </tr>
+            </table>
+            <table id="playerSpells"></table>
+        </div>
+        <div id="playerBoard">
+            <h3>Collections</h3>
+            <div class="tab">
+                <button class="tablinks" onclick="openTab(event, 'Lands')">Lands</button>
+                <button class="tablinks" onclick="openTab(event, 'Artifacts')">Artifacts</button>
+                <button class="tablinks" onclick="openTab(event, 'Enchantments')">Enchantments</button>
+            </div>
+
+            <div id="Lands" class="tabcontent">
+                <table id="playerLands"></table>
+            </div>
+            <div id="Artifacts" class="tabcontent">
+                <table id="playerArtifacts"></table>
+            </div>
+            <div id="Enchantments" class="tabcontent">
+                <table id="playerArtifacts"></table>
+            </div>
+        </div>
+    </div>
+    <div id='enemyArea'>
+        <div id="enemyStats">
+            <h3>Enemy - <span id="enemyName">EnemyName</span></h3>
+            <table id="enemyStatsTable">
+                <tr>
+                    <td>Power: </td>
+                    <td class="number"><span id="enemyPowerCurrent">0</span> / <span id="enemyPowerBase">0</span></td>
+                </tr>
+                <tr>
+                    <td>Toughness: </td>
+                    <td class="number"><span id="enemyToughnessCurrent">0</span> / <span
+                            id="enemyToughnessBase">0</span></td>
+                </tr>
+                <tr></tr>
+            </table>
+        </div>
+    </div>
+
+
+</body>
+<script src="manaButton.js" type="text/javascript"></script>
+
+</html>
