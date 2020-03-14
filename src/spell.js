@@ -1,32 +1,38 @@
 class Spell{
     static spells = {
-        'exile': new Spell('Exile', {colorless:5}, function(target){    
-            target.toughness.val = 0;
-            target.toughness.max = 0;
-        }, 'Instantly kills the enemy.'),
 
-        'heal': new Spell('Heal', {white:2}, function(target){
-            player.heal(5);
-        },'Heals you for 5 health.'),
+        'callToArms': new Spell('Call to Arms', {white:2}, function(target){    
+            player.creatures.push(new Creature(1,1));
+            player.creatures.push(new Creature(1,1));
+        }, 'Summons two 1/1 creatures.'),
 
-        'frogify': new Spell('Frogify', {blue:3}, function(target){
-            target.power.val = 0; 
-            target.toughness.val = 1;
-            target.name = 'Frog';
-        }, 'Turns the enemy into a 0/1 Frog creature.'),
+//         'exile': new Spell('Exile', {colorless:5}, function(target){    
+//             target.toughness.val = 0;
+//             target.toughness.max = 0;
+//         }, 'Instantly kills the enemy.'),
 
-        'drain': new Spell('Drain', {black: 4}, function(target){
-            player.heal(3); 
-            target.damage(3);
-        }, 'Drains the enemy for 3 life.'),
+//         'heal': new Spell('Heal', {white:2}, function(target){
+//             player.heal(5);
+//         },'Heals you for 5 health.'),
 
-        'lightningBolt': new Spell('Lightning Bolt', {red:1}, function(target){
-            target.damage(3)
-        }, 'Bolts the enemy for 3 damage.'),
+//         'frogify': new Spell('Frogify', {blue:3}, function(target){
+//             target.power.val = 0; 
+//             target.toughness.val = 1;
+//             target.name = 'Frog';
+//         }, 'Turns the enemy into a 0/1 Frog creature.'),
 
-        'rampantGrow': new Spell('Rampant Growth', {green:2}, function(target){
-            player.lands.push(randomFrom(Land.lands));
-        }, 'Add a random land.'),
+//         'drain': new Spell('Drain', {black: 4}, function(target){
+//             player.heal(3); 
+//             target.damage(3);
+//         }, 'Drains the enemy for 3 life.'),
+
+//         'lightningBolt': new Spell('Lightning Bolt', {red:1}, function(target){
+//             target.damage(3)
+//         }, 'Bolts the enemy for 3 damage.'),
+
+//         'rampantGrow': new Spell('Rampant Growth', {green:2}, function(target){
+//             player.lands.push(randomFrom(Land.lands));
+//         }, 'Add a random land.'),
     }
 
     constructor(name, manaCost, effect, hoverText){

@@ -2,7 +2,7 @@ class Creature{
 
     randomNames = ['Eldrazi Spawn', 'Soldier', 'Wizard', 'Zombie', 'Goblin', 'Elf'];
     
-    constructor(power, toughness, color){
+    constructor(power, toughness){
         var seed = Math.random();
         this._name = this.randomNames[Math.floor(seed * (this.randomNames.length))];;
         this._power = new Stat(0, power, power);
@@ -24,6 +24,10 @@ class Creature{
 
     damage(amount){
         this.toughness.val -= amount;
+    }
+    
+    render(){
+        return `<tr><td><b>${this._name}</b>: <span>${this._power.val} / ${this._toughness.val}</span></td></tr>`;
     }
 
 }

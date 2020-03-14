@@ -115,6 +115,14 @@ class Player {
         }
         return html;
     }
+    renderCreatures() {
+        var html = '';
+        for (var i in this.creatures) {
+            var creature = this.creatures[i];
+            html += creature.render();
+        }
+        return html;
+    }
     renderArtifacts() {
         var html = '';
         for (var i in this.artifacts) {

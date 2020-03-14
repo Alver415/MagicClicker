@@ -1,4 +1,5 @@
 var version = 0,
+devmode = true,
 logging = false,
 tick = 0,
 difficulty = 1,
@@ -15,6 +16,9 @@ mapping = {
 }
 
 function reset(){
+    if (devmode){
+        return;
+    }
     var playerName = prompt('What is your name?','');
     var playerTitle = prompt('What is your title?','');
     set('playerName', playerName);
@@ -84,7 +88,6 @@ function update(){
     }
 }
 function playerDied(){
-    alert('You Died!');
     reset();
 }
 
@@ -115,6 +118,7 @@ function updateUI(){
     
     set('playerSpells', player.renderSpells());
     set('playerLands', player.renderLands());
+    set('playerCreatures', player.renderCreatures());
     set('playerArtifacts', player.renderArtifacts());
 
     var percent = player.health.val / player.health.max * 100;
