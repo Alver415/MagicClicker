@@ -84,13 +84,36 @@ class Player {
         }
     }
     drawSpell() {
-        if (player.spells.length < player.maxHandSize) {
-            player.spells.push(randomFrom(Spell.spells));
+        if (this.spells.length < this.maxHandSize) {
+            var newSpell = randomFrom(spells)();
+            this.spells.push(newSpell);
+            this.renderSpell(newSpell);
             return true;
         } else{
             return false;
         }
     }
+    renderSpell(spell) {
+        var spellsTab = document.getElementById('playerSpells');
+        spellsTab.append(spell);
+    }
+    cast(spell){
+        if (this.hasMana(spell.manaCost)){
+            this.useMana(spell.manaCost);
+            this.removeSpell(spell);
+            spell.effect(enemy);
+            updateUI();
+        }
+    }
+    removeSpell(spell){
+        for (var s in this.spells){
+            if (this.spells[s] === spell){
+                this.spells.splice(s,1);
+                spell.remove();
+            }
+        }
+    }
+
     hasArtifact(artifact){
         for (var a in this.artifacts){
             if (this.artifacts[a].name == artifact.name){
@@ -98,14 +121,6 @@ class Player {
             }
         }
         return false;
-    }
-    renderSpells() {
-        var html = '';
-        for (var i in this.spells) {
-            var spell = this.spells[i];
-            html += spell.render();
-        }
-        return html;
     }
     renderLands() {
         var html = '';

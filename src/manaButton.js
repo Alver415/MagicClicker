@@ -7,8 +7,10 @@ class ManaButton extends HTMLElement {
     const color = this.getAttribute('color');
     const background = this.getAttribute('background');
     const normalizedRadius = radius - stroke / 2;
-    this._circumference = normalizedRadius * 2 * Math.PI;
 
+    this._circumference = normalizedRadius * 2 * Math.PI;
+    this._progress = 0;
+    this._amount = 0;
     this._root = this.attachShadow({ mode: 'open' });
     this._root.innerHTML = `
       <div 

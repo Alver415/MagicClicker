@@ -1,65 +1,62 @@
 class TimeSpinner extends HTMLElement {
   constructor() {
     super();
-    const stroke = 2;
-    const radius = 30;
+    const stroke = this.getAttribute('stroke');
     const color = this.getAttribute('color');
-    const background = this.getAttribute('background');
-    const normalizedRadius = radius - stroke / 2;
-    this._circumference = normalizedRadius * 2 * Math.PI;
-
+    const radius = this.getAttribute('radius');
+    const radius_norm = radius - stroke;
+    this._circumference = 2 * Math.PI * radius_norm;
     this._root = this.attachShadow({ mode: 'open' });
     this._root.innerHTML = `
-        <svg height="${radius * 2}" width="${radius * 2}">
-          <circle
-            stroke="${color}"
-            stroke-dasharray="${this._circumference} ${this._circumference}"
-            style="stroke-dashoffset:${this._circumference}"
-            stroke-width="${stroke}"
-            fill="transparent"
-            r="${normalizedRadius}"
-            cx="${radius}"
-            cy="${radius}"
-          />   
-          <text id="amount"
-          dy=".35em"
-          x="50%" 
-          y="50%" 
-          text-anchor="middle" 
-          fill="white"
-          stroke="black" 
-          stroke-width="0.5px">0</text>
-        </svg>
+         <svg class="spinner">
+           <circle class="path" fill="transparent" stroke-width="${stroke}" cx="${radius}" cy="${radius}" r="${radius_norm}" stroke="url(#gradient)"/>
+           <circle class="path" fill="${color}" cx="${radius}" cy="${stroke}" r="${stroke}"/>
+           <linearGradient id="gradient">
+             <stop offset="0%" stop-color="${color}" stop-opacity="1"/>
+             <stop offset="50%" stop-color="${color}" stop-opacity=".5"/>
+             <stop offset="100%" stop-color="${color}" stop-opacity="0"/>
+           </linearGradient>
+        </svg> 
       <style>
-        .mana-button {
-          display: inline-block;
-          height: 60px;
-          width: 60px;
-          line-height: 60px;
-          border-radius: 50%;
-          color: white;
-          text-align: center;
-          font-size: 2.5em;
-          cursor: pointer;
-          opacity: 0.6;        
-          transition: opacity 0.5s;
+        .path {
+          stroke-dasharray: ${this._circumference};
+          stroke-dashoffset: ${this._circumference / 4};
         }
-        .mana-button:hover{
-          opacity: 1;
+        .spinner {
+          width:${radius * 2}px;
+          height:${radius * 2}px;
+          animation-name: spin;
+          animation-duration: 1000ms;
+          animation-iteration-count: infinite;
+          animation-timing-function: linear; 
         }
-        .mana-button svg{
-          position:relative;
-          top:0px;
-          left:0px;
+
+        @keyframes spin{
+          from {
+              transform:rotate(0deg);
+          }
+          to {
+              transform:rotate(360deg);
+          }
         }
-        .mana-button svg circle {
-          transition: stroke-dashoffset 0.35s;
-          transform: rotate(-90deg);
-          transform-origin: 50% 50%;
-        }
+
       </style>
     `;
   }
-}
 
+  setProgress(percent) {
+    const timespinner = this._root.querySelector('svg.spinner');
+    timespinner.style.transform = `rotate(${(percent / 100) * 360}deg)`;
+  }
+
+  static get observedAttributes() {
+    return ['progress'];
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name === 'progress') {
+      this.setProgress(newValue);
+    }
+  }
+}
 window.customElements.define('time-spinner', TimeSpinner);

@@ -32,6 +32,6 @@ class Artifact{
     }
 
     render(){
-        return `<tr><td><button class="tooltip" onmousedown=\"activate(\'${this._name}\')\" ${this.isReady() ? '' : 'disabled'}>${this._name}<span class=\"tooltiptext\">${this._hoverText}</span></button></td></tr>`;
+        return `<tr><td><button class="tooltip" onmousedown=\"activate(\'${this._name}\')\" ${this.isReady() ? '' : 'disabled'}>${this._name}</button></td></tr>`;
     }
 }

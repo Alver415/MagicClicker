@@ -6,8 +6,6 @@ difficulty = 1,
 player = new Player();
 enemy = new Creature(1,1),
 mapping = {
-    'playerHealthCurrent' : function(){return player.health.val},
-    'playerHealthMax' : function(){return player.health.max},
     'enemyPowerCurrent' : function(){return enemy.power.val},
     'enemyPowerBase' : function(){return enemy.power.max},
     'enemyToughnessCurrent' : function(){return enemy.toughness.val},
@@ -36,24 +34,8 @@ function getMana(mana){
 }
 function attack(){
     enemy.toughness.val -= 1;
-    
     if (enemy.toughness.val <= 0){
         enemyDied();
-    }
-    updateUI();
-}
-function cast(spellName){
-    var spells = player.spells;
-    for (i in spells){
-        var spell = spells[i];
-        if (spell.name == spellName){
-            if (player.hasMana(spell.manaCost)){
-                player.useMana(spell.manaCost);
-                spells.splice(i, 1);
-                spell.effect(enemy);
-                break;
-            }
-        }
     }
     updateUI();
 }
@@ -116,17 +98,17 @@ function updateUI(){
         set(key, mapping[key]());
     }
     
-    set('playerSpells', player.renderSpells());
-    set('playerLands', player.renderLands());
-    set('playerCreatures', player.renderCreatures());
-    set('playerArtifacts', player.renderArtifacts());
+    set('Lands', player.renderLands());
+    set('Creatures', player.renderCreatures());
+    set('Artifacts', player.renderArtifacts());
 
-    var percent = player.health.val / player.health.max * 100;
-    get('playerHealth').style['background'] = `linear-gradient(90deg, red 0%, red ${percent}%, grey ${percent}%, grey 100%)`;
+    document.querySelector('health-bar').update();
 
     for (var mana in player.mana){
         updateManaButton(mana);
     }
+
+    document.querySelector('time-spinner').setProgress(tick % 10 * 10);
 }
 
 function updateManaButton(mana){
@@ -140,7 +122,7 @@ function updateManaButton(mana){
 
 function playerTurn(){
     player.generateMana();
-    if (randomChance(0.2)){
+    if (tick % 10 == 0){
         player.drawSpell();
     }
 }
@@ -186,7 +168,9 @@ function set(id, value){
 function get(id){
 	return document.getElementById(id);
 }
-
+function rgb(r,g,b) {
+    return 'rgb(' + [(r||0),(g||0),(b||0)].join(',') + ')';
+}
 window.onload = reset;
 window.setInterval(doTick, 1000);
 
