@@ -23,6 +23,10 @@ function reset(){
     set('playerTitle', playerTitle);
     player = new Player();
     enemy = new Creature(1,1);
+    player.drawSpell();
+    player.drawSpell();
+    player.drawSpell();
+    
     tick = 0;
     difficulty = 1;
     updateUI();
